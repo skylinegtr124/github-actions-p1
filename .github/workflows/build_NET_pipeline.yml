@@ -1,0 +1,24 @@
+#------------------------------
+#
+#Copyright by SkyLine, 2024.
+#
+#------------------------------
+
+name: build_NET_pipeline
+on:
+  push:
+    branches: 
+      - main
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Copy repos
+      uses: actions/checkout@v1
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4.0.0
+      with:
+        dotnet-version: '8.0.101'
+    - name: Build App
+      run: dotnet build

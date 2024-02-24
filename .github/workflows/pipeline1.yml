@@ -1,0 +1,46 @@
+#------------------------------
+#
+#Copyright by SkyLine, 2024.
+#
+#------------------------------
+
+name: My-GitHubActions-Basics
+env:
+  APP_NAME: "MyAPP"
+  PACKAGE_NAME: "SHA_${{ github.sha }}"
+on:
+  push:
+    branches: 
+      - main
+jobs:
+  my_testing:
+
+    runs-on: ubuntu-latest
+    env:
+      VAR1: "Job1 VAR1"
+      VAR2: "Job1 VAR2"
+    steps: 
+    - name: Print Hello World 
+      run: echo "Hello World from job#1"
+    - name: Execute few commands (static+var echo)
+      run: |
+        echo "Hello Message1"
+        echo "Hello Message2"
+        echo "APP_NAME is ${{ env.APP_NAME }}"
+        echo "APP_NAME is ${{ env.VAR2 }}"
+
+    - name: Git clone my repo
+      uses: actions/checkout@v1
+    - name: List current folder
+      run: ls -la
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [my_testing]
+    steps:
+    - name: Print again Hello World
+      run: echo "Hello World from deploy job"
+    - name: Print Package Name
+      run: echo "Package Name is ${{ env.PACKAGE_NAME }}"
+    - name: Test exist package AWS
+      run: aws --version
