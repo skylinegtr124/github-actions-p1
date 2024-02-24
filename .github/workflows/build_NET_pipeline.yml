@@ -46,6 +46,8 @@ jobs:
     - name: Check Port
       run: |
           nc -zv 127.0.0.1 22000
+          tar -cvf my-image.tar ./*
+          chmod 664 my-image.tar
 
     - name: copy file via ssh key
       uses: appleboy/scp-action@v0.1.7
@@ -54,5 +56,5 @@ jobs:
         username: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
         port: 22000
         key: ${{ secrets.SSH_PRIVATE_VM_PRIVATE_KEY }}
-        source: ./*
-        target: ~/WEBSERVER/
+        source: "my-image.tar"
+        target: "~/WEBSERVER/"
