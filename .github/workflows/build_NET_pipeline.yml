@@ -47,12 +47,12 @@ jobs:
       run: |
           nc -zv 127.0.0.1 22000
 
-    #- name: copy file via ssh key
-    #  uses: appleboy/scp-action@v0.1.7
-    # with:
-    #    host: 127.0.0.1
-    #    username: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
-    #    port: 22000
-    #    key: ${{ secrets.SSH_PRIVATE_VM_PRIVATE_KEY }}
-    #    source: ./
-    #    target: ~/WEBSERVER/
+    - name: copy file via ssh key
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: 127.0.0.1
+        username: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
+        port: 22000
+        key: ${{ secrets.SSH_PRIVATE_VM_PRIVATE_KEY }}
+        source: ./*
+        target: ~/WEBSERVER/
