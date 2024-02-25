@@ -49,7 +49,9 @@ jobs:
           hostname
           tar -cvf my-image.tar ./*
           chmod 777 my-image.tar
-          scp -i <(echo "${{ secrets.SSH_PRIVATE_VM_PRIVATE_KEY }}") -P 22000 /my-image.tar ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/
+          echo "${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}}" >> key
+          chmod 600 ./key
+          scp -i ./key -P 22000 /my-image.tar ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/
   #        ssh -i <(echo "${{ secrets.SSH_PRIVATE_VM_PRIVATE_KEY }}") ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1 -p 22000
 
       
