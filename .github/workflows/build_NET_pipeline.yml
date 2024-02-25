@@ -46,11 +46,13 @@ jobs:
     - name: Check Port
       run: |
           nc -zv 127.0.0.1 22000
+          echo "${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}}" > key;
+          chmod 0400 ./key;
+          ssh-keygen -y -e -f key
+          file key
           hostname
           tar -cvf my-image.tar ./*
           chmod 777 my-image.tar
-          echo "${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}}" > key
-          chmod 600 ./key
           scp -i ./key -P 22000 /my-image.tar ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/
   #        ssh -i <(echo "${{ secrets.SSH_PRIVATE_VM_PRIVATE_KEY }}") ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1 -p 22000
 
