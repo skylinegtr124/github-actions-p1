@@ -51,6 +51,7 @@ jobs:
           ssh-keygen -y -e -f .key
           file .key
           hostname
+          rm user_key
           rsync -e "ssh -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000" -av --exclude '.*' $(pwd) ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
  #        scp -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P 22000 -r !(.*) ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
       
