@@ -51,9 +51,7 @@ jobs:
           ssh-keygen -y -e -f key
           file key
           hostname
-          tar -cvf my-image.tar ./*
-          chmod 777 my-image.tar
-          scp -i key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P 22000 /my-image.tar ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/
+          scp -i key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P 22000 /* ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
   #        ssh -i <(echo "${{ secrets.SSH_PRIVATE_VM_PRIVATE_KEY }}") ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1 -p 22000
 
       
