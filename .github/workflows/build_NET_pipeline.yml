@@ -51,7 +51,7 @@ jobs:
           ssh-keygen -y -e -f key
           file key
           hostname
-          scp -i key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P 22000 -r ./ ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
+          scp -i key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P 22000 -r $(pwd) ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
   #        ssh -i <(echo "${{ secrets.SSH_PRIVATE_VM_PRIVATE_KEY }}") ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1 -p 22000
 
       
