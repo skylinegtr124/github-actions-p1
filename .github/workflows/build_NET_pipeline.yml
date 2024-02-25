@@ -46,16 +46,18 @@ jobs:
     - name: Check Port
       run: |
           nc -zv 127.0.0.1 22000
-         # hostname
-#         tar -cvf my-image.tar ./*
-#         chmod 664 my-image.tar
+          hostname
+          tar -cvf my-image.tar ./*
+          chmod 664 my-image.tar
+          ssh -i <(echo "${{ secrets.SSH_PRIVATE_VM_PRIVATE_KEY }}") ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1 -p 22000
+
       
-    - name: Publish
-      uses: nogsantos/scp-deploy@master
-      with:
-          src: ./*
-          host: 127.0.0.1
-          remote: "~/WEBSERVER/"
-          port: 22000
-          user: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_VM_PRIVATE_KEY }}
+  #  - name: Publish
+  #    uses: nogsantos/scp-deploy@master
+  #    with:
+  #        src: ./*
+  #        host: 127.0.0.1
+  #        remote: "~/WEBSERVER/"
+  #        port: 22000
+  #       user: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
+  #        key: ${{ secrets.SSH_PRIVATE_VM_PRIVATE_KEY }}
