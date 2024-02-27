@@ -28,9 +28,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-    
-    - name: Checkout code
+
+    - name: Copy repos
       uses: actions/checkout@v4
+      
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4.0.0
+      #with:
+        #dotnet-version: '8.0.101'
+    - name: Build App
+      run: dotnet build
     
     - name: Enable SSH Redirect Port
       uses: stoneydavis/ssh-port-forward-action@v1.0.0
@@ -52,3 +59,14 @@ jobs:
           hostname
           rm user_key
           rsync -e "ssh -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000" -av --exclude '.*' $(pwd) ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
+
+   # - name: build docker container
+   #   uses: appleboy/ssh-action@v1.0.3
+   #   with:
+   #     host: 127.0.0.1
+   #     username: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
+   #     key: ${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}}
+   #     port: 22000
+   #     script: |
+   #       whoami
+   #       ls -al
