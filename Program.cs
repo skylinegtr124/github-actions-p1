@@ -6,8 +6,8 @@ namespace BasicWebServer
     {
         static void Main(string[] args)
         {
-            string ipAddress = "127.0.0.1"; // IP-адрес, на котором будет запущен сервер
-            int port = 8081; // Порт, на котором будет слушать сервер
+            string ipAddress = "0.0.0.0"; // IP-адрес, на котором будет запущен сервер
+            int port = 9595; // Порт, на котором будет слушать сервер
 
             BasicWebServer.Server.HttpServer server = new BasicWebServer.Server.HttpServer(ipAddress, port);
             server.Start();
