@@ -11,8 +11,10 @@ namespace BasicWebServer
 
             BasicWebServer.Server.HttpServer server = new BasicWebServer.Server.HttpServer(ipAddress, port);
             server.Start();
-
-            Console.ReadLine(); // Добавляем для того, чтобы консоль не закрывалась сразу после запуска сервера
+            while(true)
+            {
+                Thread.Sleep(1000); // Пауза в выполнении цикла на 1 секунду
+            }
         }
     }
 }
