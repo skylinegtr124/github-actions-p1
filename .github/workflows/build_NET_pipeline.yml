@@ -60,13 +60,16 @@ jobs:
           rm user_key
           rsync -e "ssh -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000" -av --exclude '.*' $(pwd) ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
 
-   # - name: build docker container
-   #   uses: appleboy/ssh-action@v1.0.3
-   #   with:
-   #     host: 127.0.0.1
-   #     username: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
-   #     key: ${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}}
-   #     port: 22000
-   #     script: |
-   #       whoami
-   #       ls -al
+    - name: build docker container
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: 127.0.0.1
+        username: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
+        key: ${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}}
+        port: 22000
+        script: |
+            cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }} 
+            docker stop WebContainer
+            docker rm WebContainer
+            sudo docker build . -t webimage
+            docker run --name WebContainer --restart always -d -p 9595:9595 webimage
