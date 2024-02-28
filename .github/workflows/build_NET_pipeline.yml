@@ -55,9 +55,8 @@ jobs:
           nc -zv 127.0.0.1 22000
           echo "${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}}" > ./.key;
           chmod 0400 ./.key;
-          rsync -e "ssh -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000" -av --exclude '.*' $(pwd)/bin/Debug/net8.0/ ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
+          rsync -e "ssh -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000" -av --exclude '.*' $(pwd)/bin/Debug/net8.0/ ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }}
     
-  #  - name: Build docker image and restart container
-  #    run: |
-  #        ssh -tt -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000 ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1 "cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }} && docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage"
-
+    - name: Build docker image and restart container
+      run: |
+          ssh -tt -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000 ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1 "cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }} && docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage"
