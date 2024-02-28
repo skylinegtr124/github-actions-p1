@@ -73,19 +73,11 @@ jobs:
   #          nc -zv 127.0.0.1 22000
   #          docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage
   #          cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }}      
-   # - name: Copy Project file to Prod Server
-   #   run: |
-   #       ssh -tt -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000 ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1
-   #       hostname
-
-    - name: Run a command remotely
-      uses: docker://evaneos/ssh-action:0.1.0
-      with:
-        hosts: 127.0.0.1
-        port: 22000
-        user: ${{ secrets.SSH_PUBLIC_VM_USERNAME }}
-        private_key: ${{  secrets.SSH_PRIVATE_VM_PRIVATE_KEY  }}
-        commands: echo "Hello world!"   
+    - name: Copy Project file to Prod Server
+      run: |
+          ssh -tt -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000 ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1 "hostname && docker ps"
+          
+ 
     
              #   hostname
               #  docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage
