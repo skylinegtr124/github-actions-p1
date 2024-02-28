@@ -52,7 +52,7 @@ jobs:
         
     - name: Copy Project file to Prod Server
       run: |
-          nc -zv 127.0.0.5 22000
+          nc -zv 127.0.0.1 22000
           echo "${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}}" > ./.key;
           chmod 0400 ./.key;
   #        ssh-keygen -y -e -f .key
@@ -64,7 +64,7 @@ jobs:
     - name: build docker container
       uses: appleboy/ssh-action@v1.0.3
       with:
-        host: 127.0.0.5
+        host: 127.0.0.1
         username: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
         key: ${{  secrets.SSH_PRIVATE_VM_PRIVATE_KEY  }}
         port: 22000
