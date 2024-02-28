@@ -34,7 +34,7 @@ namespace BasicWebServer.Server
 
                 var networkStream = connection.GetStream();
 
-                WriteResponse(networkStream, "Hello there!!!");
+                WriteResponse(networkStream, "Hello Hikkin House");
 
                 connection.Close();
             }
