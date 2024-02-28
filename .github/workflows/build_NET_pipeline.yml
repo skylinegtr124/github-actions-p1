@@ -72,7 +72,7 @@ jobs:
   #          docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage
   #          cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }}
     - name: build docker container     
-      uses: D3rHase/ssh-command-action@{version}
+      uses: D3rHase/ssh-command-action@v0.2.2
       with:
           host: 127.0.0.1 # Remote server address / ip - required
           port: 22000 # Remote server port -  Default: 22 - optional
