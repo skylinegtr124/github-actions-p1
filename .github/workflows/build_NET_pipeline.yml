@@ -78,8 +78,7 @@ jobs:
           port: 22000 # Remote server port -  Default: 22 - optional
           user: ${{ secrets.SSH_PRIVATE_VM_USERNAME }} # Remote server user - required
           private_key: ${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}} # Private ssh key registered on the remote server - required
-          command: |
-                echo 'hello world'
-                hostname
-                docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage
-                cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }}
+          command: echo 'hello world'
+             #   hostname
+              #  docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage
+              #  cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }}
