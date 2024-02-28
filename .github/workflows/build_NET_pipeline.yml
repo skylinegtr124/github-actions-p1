@@ -65,7 +65,7 @@ jobs:
       with:
         host: 127.0.0.1
         username: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
-        key_path: ./.key
+        key_path: .key
         port: 22000
         script: |
             hostname
