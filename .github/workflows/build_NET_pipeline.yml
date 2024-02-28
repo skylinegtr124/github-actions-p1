@@ -61,15 +61,15 @@ jobs:
   #        rsync -e "ssh -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000" -av --exclude '.*' $(pwd)/ ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
   #        chmod 777 ./.key;
           
-    - name: build docker container
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: 127.0.0.1
-        username: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
-        key: ${{  secrets.SSH_PRIVATE_VM_PRIVATE_KEY  }}
-        port: 22000
-        script: |
-            hostname
+  #  - name: build docker container
+  #    uses: appleboy/ssh-action@v1.0.3
+  #    with:
+  #      host: 127.0.0.1
+  #      username: ${{ secrets.SSH_PRIVATE_VM_USERNAME }}
+  #      key: ${{  secrets.SSH_PRIVATE_VM_PRIVATE_KEY  }}
+  #      port: 22000
+  #      script: |
+  #          hostname
   #          nc -zv 127.0.0.1 22000
   #          docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage
   #          cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }}      
@@ -79,14 +79,14 @@ jobs:
    #       hostname
 
       
-   # - name: build docker container     
-   #   uses: D3rHase/ssh-command-action@v0.2.2
-   #   with:
-   #       host: 127.0.0.1 # Remote server address / ip - required
-   #       port: 22000 # Remote server port -  Default: 22 - optional
-   #       user: ${{ secrets.SSH_PRIVATE_VM_USERNAME }} # Remote server user - required
-   #       private_key: ${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}} # Private ssh key registered on the remote server - required
-   #       command: echo 'hello world'
+    - name: build docker container     
+      uses: D3rHase/ssh-command-action@v0.2.2
+      with:
+          host: 127.0.0.1 # Remote server address / ip - required
+          port: 22000 # Remote server port -  Default: 22 - optional
+          user: ${{ secrets.SSH_PRIVATE_VM_USERNAME }} # Remote server user - required
+          private_key: ${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}} # Private ssh key registered on the remote server - required
+          command: echo 'hello world'
              #   hostname
               #  docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage
               #  cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }}
