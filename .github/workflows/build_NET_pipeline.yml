@@ -75,7 +75,7 @@ jobs:
   #          cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }}      
     - name: Copy Project file to Prod Server
       run: |
-          ssh -tt -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000 ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1 "hostname && docker ps"
+          ssh -tt -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000 ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1 "docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage"
           
  
     
