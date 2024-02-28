@@ -10,35 +10,34 @@ on:
     branches: 
       - main
 jobs:
- # build:
-#
-#    runs-on: ubuntu-latest
-#    steps: 
-#    - name: Copy repos
-#      uses: actions/checkout@v4
-#    - name: Setup dotnet
-#      uses: actions/setup-dotnet@v4.0.0
-#      #with:
-#        #dotnet-version: '8.0.101'
-#    - name: Build App
-#      run: dotnet build
+  build:
+
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Copy repos
+      uses: actions/checkout@v4
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4.0.0
+      #with:
+        #dotnet-version: '8.0.101'
+    - name: Build App
+      run: dotnet build
 
   deploy: 
 
     runs-on: ubuntu-latest
-  #  needs: [build]
+    needs: [build]
     steps:
-#
-#    - name: Copy repos
-#      uses: actions/checkout@v4
-#      
-#    - name: Setup dotnet
-#      uses: actions/setup-dotnet@v4.0.0
-#      #with:
-#        #dotnet-version: '8.0.101'
-#    - name: Build App
-#      run: dotnet build
-#    
+
+    - name: Copy repos
+      uses: actions/checkout@v4   
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4.0.0
+      #with:
+      #dotnet-version: '8.0.101'
+    - name: Build App
+      run: dotnet build
+    
     - name: Enable SSH Redirect Port
       uses: stoneydavis/ssh-port-forward-action@v1.0.0
       with:
@@ -55,11 +54,11 @@ jobs:
           nc -zv 127.0.0.1 22000
           echo "${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}}" > ./.key;
           chmod 0400 ./.key;
-  #        ssh-keygen -y -e -f .key
-  #        hostname
-  #        rm user_key
-  #        rsync -e "ssh -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000" -av --exclude '.*' $(pwd)/ ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
-  #        chmod 777 ./.key;
+          ssh-keygen -y -e -f .key
+          hostname
+          rm user_key
+          rsync -e "ssh -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000" -av --exclude '.*' $(pwd)/ ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
+          chmod 777 ./.key;
           
   #  - name: build docker container
   #    uses: appleboy/ssh-action@v1.0.3
@@ -73,12 +72,10 @@ jobs:
   #          nc -zv 127.0.0.1 22000
   #          docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage
   #          cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }}      
-    - name: Copy Project file to Prod Server
+    - name: build docker image and restart container
       run: |
           ssh -tt -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000 ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1 "docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage"
-          
- 
-    
+
              #   hostname
               #  docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage
               #  cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }}
