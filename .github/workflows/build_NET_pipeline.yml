@@ -78,15 +78,15 @@ jobs:
    #       ssh -tt -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000 ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1
    #       hostname
 
-      
-    - name: build docker container     
-      uses: D3rHase/ssh-command-action@v0.2.2
+    - name: Run a command remotely
+      uses: docker://evaneos/ssh-action:0.1.0
       with:
-          host: 127.0.0.1 # Remote server address / ip - required
-          port: 22000 # Remote server port -  Default: 22 - optional
-          user: ${{ secrets.SSH_PRIVATE_VM_USERNAME }} # Remote server user - required
-          private_key: ${{secrets.SSH_PRIVATE_VM_PRIVATE_KEY}} # Private ssh key registered on the remote server - required
-          command: echo 'hello world'
+        hosts: 127.0.0.1
+        port: 22000
+        user: ${{ secrets.SSH_PUBLIC_VM_USERNAME }}
+        private_key: ${{  secrets.SSH_PRIVATE_VM_PRIVATE_KEY  }}
+        commands: echo "Hello world!"   
+    
              #   hostname
               #  docker stop WebContainer && docker rm WebContainer && sudo docker build . -t webimage && docker run --name WebContainer --restart always -d -p 9595:9595 webimage
               #  cd ${{ secrets.SSH_PATH_PROJECT_PRIVATE_VM }}
