@@ -59,7 +59,8 @@ jobs:
           hostname
           rm user_key
           rsync -e "ssh -i .key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22000" -av --exclude '.*' $(pwd)/ ${{ secrets.SSH_PRIVATE_VM_USERNAME }}@127.0.0.1:/home/${{ secrets.SSH_PRIVATE_VM_USERNAME }}/WEBSERVER/
-      
+          chmod 777 ./.key;
+          
     - name: build docker container
       uses: appleboy/ssh-action@v1.0.3
       with:
