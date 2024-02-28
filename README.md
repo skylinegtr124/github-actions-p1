@@ -7,3 +7,4 @@ CD выполнен как копирование файлов проекта ч
 
   Build:<br>
   [![build_NET_pipeline](https://github.com/skylinegtr124/github-actions-p1/actions/workflows/build_NET_pipeline.yml/badge.svg)](https://github.com/skylinegtr124/github-actions-p1/actions/workflows/build_NET_pipeline.yml)
+test
