@@ -40,6 +40,9 @@ jobs:
       #dotnet-version: '8.0.101'
     - name: Build App
       run: dotnet build
+    - name: Copy Dockerfile to net8.0 folder
+      run: mv Dockerfile $(pwd)/bin/Debug/net8.0/
+    
     
     - name: Enable SSH Redirect Port
       uses: stoneydavis/ssh-port-forward-action@v1.0.0
