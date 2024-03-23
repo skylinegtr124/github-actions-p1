@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 RUN apt-get -y update
-RUN apt-get install -y aspnetcore-runtime-8.0
+RUN apt-get install -y dotnet-runtime-8.0
 #RUN apt-get install -y dotnet-sdk-8.0
 RUN apt -y install curl
 RUN mkdir /webapp
